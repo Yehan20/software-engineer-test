@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <div class="container">
+      <h1>Software Engineer – Screening Test</h1>
+      <ul>
+        <li>
+          Question 1 Code is In the Script Tag Commented with the Relevent
+          Quesitons
+        </li>
+        <li>
+          Question 2 Code is In the Script Tag Commented with the Relevent
+          Quesitons
+        </li>
+        <li>Below UI Is For Question 2</li>
+        <li>
+          Question 3 Code is in a SQL File in the Project How Ever Its Queris
+          are also in down
+        </li>
+      </ul>
+    </div>
+
+    <div class="wrapper">
+      <form action="">
+        <div>
+          <label for="email_id">Email ID:</label>
+          <input type="text" id="email_id" required /><br />
+        </div>
+
+        <div>
+          <label for="start_date">Start Date:</label>
+          <input
+            type="date"
+            id="start_date"
+            value="2024-09-01"
+            required
+          /><br />
+        </div>
+
+        <div>
+          <label for="start_time">Start Time:</label>
+          <input type="time" id="start_time" required /><br />
+        </div>
+
+        <div>
+          <label for="end_date">End Date:</label>
+          <input type="date" id="end_date" required value="2024-10-29" /><br />
+        </div>
+
+        <div>
+          <label for="end_time">End Time:</label>
+          <input type="time" id="end_time" required /><br />
+        </div>
+
+        <button onclick="listBusyPeriods()" id="loadEvents" type="button">
+          Load Events
+        </button>
+      </form>
+
+      <div>
+        <table id="calenderInfo" style="margin-top: 20px">
+          <tr>
+            <td>Login using your google account</td>
+          </tr>
+        </table>
+
+        <button id="authorize_button" onclick="handleAuthClick()">
+          Authorize
+        </button>
+        <button id="signout_button" onclick="handleSignoutClick()">
+          Sign Out
+        </button>
+      </div>
+    </div>
+    <div class="container">
+      <img src="./Capture.JPG" width="800" alt="" />
+    </div>
+
+    <div class="container">
+      <div class="answer">
+        <h2>Question 3 (Code is in SQL File)</h2>
+        <p>
+          CREATE TABLE User ( id int NOT NULL, firstName varchar(255), lastName
+          varchar(255), email varchar(255), cultureID int, deleted bit, country
+          varchar(255), isRevokeAccess bit, created datetime, PRIMARY KEY (id)
+          );
+        </p>
+        INSERT INTO User(id ,
+        firstName,lastName,email,cultureID,deleted,country, isRevokeAccess,
+        created ) VALUES (1, 'Victor', 'Shevchenko', 'vs@ gmail.com', 1033, 1,
+        'US', 0, '2011-04-05'), (2, 'Oleksandr', 'Petrenko', 'op@ gmail.com',
+        1034, 0, 'UA', 0, '2014-05-01'), (3, 'Victor', 'Tarasenko',
+        'vt@gmail.com', 1033, 1, 'US', 1, '2015-07-03'), (4, 'Sergiy',
+        'Ivanenko', 'sergiy@gmail.com', 1046, 0, 'UA', 1, '2010-02-02'), (5,
+        'Vitalii', 'Danilchenko', 'shumko@ gmail.com', 1031, 0, 'UA', 1,
+        '2014-05-01'), (6, 'Joe', 'Dou', 'joe@ gmail.com', 1032, 0, 'US', 1,
+        '2009-01-01'), (7, 'Marko', 'Polo', 'marko@gmail.com', 1033, 1, 'UA', 1,
+        '2015-07-03');
+
+        <p>
+          CREATE TABLE GroupTable ( id int NOT NULL, name varchar(255), created
+          datetime , PRIMARY KEY (id) );
+        </p>
+
+        <p>
+          INSERT INTO GroupTable(id,name,created) VALUES (10, 'Support',
+          '2010-02-02'), (12, 'Dev team', '2010-02-03'), (13, 'Apps team',
+          '2011-05-06'), (14, 'TEST - dev team', '2013-05-06'), (15, 'Guest',
+          '2014-02-02'), (16, 'TEST-QA-team', '2014-02-02'), (17, 'TEST-team',
+          '2011-01-07') ;
+        </p>
+        <p>
+          CREATE TABLE GroupMembership ( id int, userID int, groupID int,
+          created datetime, PRIMARY KEY (id), FOREIGN KEY (userID) REFERENCES
+          User(id), FOREIGN KEY (groupID) REFERENCES GroupTable(id) );
+        </p>
+
+        <p>
+          INSERT INTO GroupMembership(id,userID,GroupID,created) VALUES (110, 2,
+          10, '2010-02-02'), (112, 3, 15, '2010-02-03'), (114, 1, 10,
+          '2014-02-02'), (115, 1, 17, '2011-05-02'), (117, 4, 12, '2014-07-13'),
+          (120, 5, 15, '2014-06-15');
+        </p>
+      </div>
+
+      <div class="answer">
+        <h4>Queries</h4>
+
+        <p>SELECT * FROM GroupTable WHERE name LIKE 'TEST%';</p>
+        <p>
+          SELECT GroupMembership.id , userID, GroupID , name ,firstName
+          ,LastName FROM GroupMembership INNER JOIN GroupTable ON
+          GroupMembership.groupID = GroupTable.id INNER JOIN User ON
+          GroupMembership.userID = User.id WHERE firstName = 'Victor' AND name
+          NOT LIKE "TEST%";
+        </p>
+        <p>
+          SELECT GroupMembership.id , name ,firstName ,LastName,user.created as
+          User_CreatedDate , GroupMembership.created as
+          GroupMembership_CreatedDate FROM GroupMembership INNER JOIN GroupTable
+          ON GroupMembership.groupID = GroupTable.id INNER JOIN User ON
+          GroupMembership.userID = User.id WHERE User_CreatedDate <
+          GroupMembership_CreatedDate ;
+        </p>
+      </div>
+    </div>
+
+    <!----------------------------- Question 1 ------------------------>
+    <script>
+      /*********** ************1.1 Question **************************/
+
+      /*
+         Question one states to find the difference between days when provided two dates.
+ 
+         In order to Approach this question i have used es6 classes as question mentioned about extends, 
+         There is  Helper class that extends the Date Class , we have created a daysTo method which talks the 
+         2 dates , we check if its dates or not if not we throw errors, we convert the date to milliseconds and find
+         the different thus we divide it by   (1000 * 60 * 60 * 24) to make it days and round after that we use our class and 
+         instasiate object and perform our calculation
+        */
+      class DateHelper extends Date {
+        daysTo(dateFrom, dateTo) {
+          if (!(dateFrom instanceof Date && dateTo instanceof Date)) {
+            throw Error(
+              "The Provided Date is not Matching the Format or Wrong Input has subbmited",
+            );
+          }
+
+          const dateStartTime = dateFrom.getTime();
+          const dateEndTime = dateTo.getTime();
+
+          const Results = Math.round(
+            (dateEndTime - dateStartTime) / (1000 * 60 * 60 * 24),
+          );
+
+          return Results;
+        }
+      }
+
+      const Date1 = new DateHelper();
+      const Date2 = new DateHelper(2000);
+
+      console.log("days to", Date1.daysTo(Date2, Date1));
+
+      /************ Question 1.1 End ***************************************/
+
+      /************ Question 1.2 Start ***************************************/
+
+      /*
+        Question 1.2 States to convert an input array and sort by its sum , 
+
+        In order to solve this question we use js array methods map and sort we make a method to accept our input
+        array and then we map thorugh it and add our total property after that we chain it with our sort method and sort it 
+        in desencding order where highest toal is first ( assumed sort as descending). and we return an array 
+
+       */
+
+      const salesArray = [
+        {
+          amount: 12000,
+          quantity: 10,
+        },
+        {
+          amount: 500,
+          quantity: 10,
+        },
+        {
+          amount: 10000,
+          quantity: 10,
+        },
+        {
+          amount: 3000,
+          quantity: 5,
+        },
+        {
+          amount: 2000,
+          quantity: 12,
+        },
+        {
+          amount: 7500,
+          quantity: 2,
+        },
+        {
+          amount: 15000,
+          quantity: 10,
+        },
+      ];
+
+      const getOrderedArrayOfSales = (salesArray) => {
+        const updatedArray = salesArray
+          .map((arr) => {
+            return {
+              ...arr,
+              total: arr.amount * arr.quantity,
+            };
+          })
+          .sort((a, b) => b.total - a.total);
+        return updatedArray;
+      };
+
+      console.log(
+        "updaed array for 2nd question",
+        getOrderedArrayOfSales(salesArray),
+      );
+
+      /************ Question 1.2 End ***************************************/
+
+      /************ Question 1.3 Start ***************************************/
+
+      /*
+          Accoding to my assumption this quesiton asks us to make make a program that takes  an json object
+          and a prototype product an interesection object which needs to have the properties of the prototype
+
+          To Solve Question we need to create function that returns as a response object that has both common protype and json features ,we need to use a for in loop . we have to exclude any mismacthing properties in both of that using has property() to solve nested objects we need to check the types if its object , or not. its need to use a recursive function to go each level inside of nested objects and find intersections which will asign the match to our response if not we just add the property 
+
+          Our Result object will contian the common properties in both 
+        */
+
+      const src = {
+        prop11: {
+          prop21: 21,
+          prop22: {
+            prop31: 31,
+            prop32: 32,
+          },
+        },
+        propa: {
+          name: "jack",
+        },
+
+        prop12: 12,
+      };
+
+      const proto = {
+        prop11: {
+          prop22: null,
+        },
+
+        name: "dpg",
+      };
+
+      const mergeObj = (jsonObj, protoObj) => {
+        // checking types
+        if (typeof jsonObj !== "object" && typeof protoObj !== "object") return; // if not objects no need to run the functin
+
+        const mergedObj = {};
+
+        for (const key in protoObj) {
+          if (protoObj.hasOwnProperty(key) && jsonObj.hasOwnProperty(key)) {
+            // console.log("value",jsonObj[key],"key",protoObj[key] === null)
+
+            // check if its an obj
+            if (typeof protoObj[key] === "object" && protoObj[key] !== null) {
+              mergedObj[key] = mergeObj(jsonObj[key], protoObj[key]);
+            } else {
+              mergedObj[key] = jsonObj[key] ?? null;
+            }
+          }
+        }
+
+        return mergedObj;
+      };
+
+      const res = mergeObj(src, proto);
+
+      console.log("Res", JSON.stringify(res), res);
+
+      /************ Question 1.3 end ***************************************/
+    </script>
+    <!---------------------------- Quesiton 1 end ---------------------- -->
+
+    <!--------------------------- Question 2 -------------------------->
+
+    <!--*********************** Question 2.1 Start*********------------>
+
+    <script type="text/javascript">
+      /*
+           2.1 Question states make program to get buys intervels in a users google calender
+
+           To Solve this question we need to use google calender api we need to configure it , we have register a 
+           project from our google account we have to add our API Key and we need to create  user credintionls as its needed 
+           to generate our client id, after configuration of that we need to get the template provided by the googles documentation
+           which has authentication and loading of the events , to load event we need to login.
+
+           We create a Html form allow to select dates and provide user email to view , its needed to login first once we login
+           we use the api to send the data and get the appointments and we show them in a ui  this question we need to use .env if we put it in production
+
+        
+        */
+
+      /* exported gapiLoaded */
+      /* exported gisLoaded */
+      /* exported handleAuthClick */
+      /* exported handleSignoutClick */
+
+      // TODO(developer): Set to client ID and API key from the Developer Console
+      const CLIENT_ID =
+        "389737522561-k8nqe1qrh49t3kdgmvuifskrgddkftdi.apps.googleusercontent.com";
+      const API_KEY = "AIzaSyClfG17FkoYA-FoM1-eT6ORdecQ6NCsCvQ";
+
+      // Discovery doc URL for APIs used by the quickstart
+      const DISCOVERY_DOC =
+        "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest";
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+
+      let tokenClient;
+      let gapiInited = false;
+      let gisInited = false;
+
+      document.getElementById("authorize_button").style.visibility = "hidden";
+      document.getElementById("signout_button").style.visibility = "hidden";
+      document.getElementById("loadEvents").style.visibility = "hidden";
+
+      /**
+       * Callback after api.js is loaded.
+       */
+      function gapiLoaded() {
+        gapi.load("client", initializeGapiClient);
+      }
+
+      /**
+       * Callback after the API client is loaded. Loads the
+       * discovery doc to initialize the API.
+       */
+      async function initializeGapiClient() {
+        await gapi.client.init({
+          apiKey: API_KEY,
+          discoveryDocs: [DISCOVERY_DOC],
+        });
+        gapiInited = true;
+        maybeEnableButtons();
+        // await handleAuthClick()
+      }
+
+      /**
+       * Callback after Google Identity Services are loaded.
+       */
+      function gisLoaded() {
+        tokenClient = google.accounts.oauth2.initTokenClient({
+          client_id: CLIENT_ID,
+          scope: SCOPES,
+          callback: "", // defined later
+        });
+        gisInited = true;
+        maybeEnableButtons();
+      }
+
+      /**
+       * Enables user interaction after all libraries are loaded.
+       */
+      function maybeEnableButtons() {
+        if (gapiInited && gisInited) {
+          document.getElementById("authorize_button").style.visibility =
+            "visible";
+        }
+      }
+
+      /**
+       *  Sign in the user upon button click.
+       */
+      async function handleAuthClick() {
+        try {
+          tokenClient.callback = async (resp) => {
+            if (resp.error !== undefined) {
+              throw resp;
+            }
+            document.getElementById("signout_button").style.visibility =
+              "visible";
+            document.getElementById("authorize_button").innerText =
+              "Refresh and Update";
+            document.getElementById("loadEvents").style.visibility = "visible";
+
+            // await listUpcomingEvents();
+            console.log(resp);
+          };
+
+          if (gapi.client.getToken() === null) {
+            // Prompt the user to select a Google Account and ask for consent to share their data
+            // when establishing a new session.
+            tokenClient.requestAccessToken({ prompt: "consent" });
+          } else {
+            // Skip display of account chooser and consent dialog for an existing session.
+            tokenClient.requestAccessToken({ prompt: "" });
+          }
+        } catch (e) {
+          console.log(e.message);
+        }
+      }
+
+      /**
+       *  Sign out the user upon button click.
+       */
+      function handleSignoutClick() {
+        const token = gapi.client.getToken();
+        if (token !== null) {
+          google.accounts.oauth2.revoke(token.access_token);
+          gapi.client.setToken("");
+          document.getElementById("content").innerText = "";
+          document.getElementById("authorize_button").innerText = "Authorize";
+          document.getElementById("signout_button").style.visibility = "hidden";
+        }
+      }
+
+      /**
+       * Print the summary and start datetime/date of the next ten events in
+       * the authorized user's calendar. If no events are found an
+       * appropriate message is printed.
+       */
+      async function listUpcomingEvents() {
+        let response;
+        try {
+          const request = {
+            calendarId: "primary",
+            timeMin: new Date().toISOString(),
+            showDeleted: false,
+            singleEvents: true,
+            maxResults: 10,
+            orderBy: "startTime",
+          };
+          response = await gapi.client.calendar.events.list(request);
+        } catch (err) {
+          document.getElementById("content").innerText = err.message;
+          return;
+        }
+
+        const events = response.result.items;
+        if (!events || events.length == 0) {
+          document.getElementById("content").innerText = "No events found.";
+          return;
+        }
+        // Flatten to string to display
+        const output = events.reduce(
+          (str, event) =>
+            `${str}${event.summary} (${event.start.dateTime || event.start.date})\n`,
+          "Events:\n",
+        );
+        document.getElementById("content").innerText = output;
+      }
+
+      async function listBusyPeriods() {
+        const calendarId = document.querySelector("#email_id").value;
+        const startDate = document.querySelector("#start_date").value;
+        const startTime = document.querySelector("#start_time").value;
+        const endDate = document.querySelector("#end_date").value;
+        const endTime = document.querySelector("#end_time").value;
+
+        const startDateTime = new Date(
+          `${startDate} ${startTime}`,
+        ).toISOString();
+        const endDateTime = new Date(`${endDate} ${endTime}`).toISOString();
+
+        let response;
+        try {
+          const request = {
+            calendarId: calendarId,
+            timeMin: startDateTime,
+            timeMax: endDateTime,
+            showDeleted: false,
+            singleEvents: true,
+
+            orderBy: "startTime",
+          };
+          response = await gapi.client.calendar.events.list(request);
+        } catch (err) {
+          if (err.result.error.message);
+          {
+            alert(
+              "an Unkown Error occour please login or type correct address",
+            );
+          }
+          return;
+        }
+
+        const events = response.result.items; // event arrat
+        console.log("events", events);
+        if (!events || events.length === 0) {
+          document.getElementById("calenderInfo").innerText =
+            "No Data.";
+          return;
+        }
+      
+       // Showing in ui
+
+        const table = document.getElementById("calenderInfo");
+        table.innerHTML = "";
+        const headerRow = document.createElement("tr");
+        const idHeader = document.createElement("th");
+        const dateHeader = document.createElement("th");
+
+        idHeader.innerText = "id";
+        headerRow.appendChild(idHeader);
+        dateHeader.innerText = "Date";
+        headerRow.appendChild(dateHeader);
+        const eventHeader = document.createElement("th");
+        eventHeader.innerText = "Event";
+        headerRow.appendChild(eventHeader);
+        const startTimeHeader = document.createElement("th");
+        startTimeHeader.innerText = "Start Time";
+        headerRow.appendChild(startTimeHeader);
+        const endTimeHeader = document.createElement("th");
+        endTimeHeader.innerText = "End Time";
+        headerRow.appendChild(endTimeHeader);
+        table.appendChild(headerRow);
+
+        events.forEach((event) => {
+          const row = document.createElement("tr");
+
+          const idCell = document.createElement("td");
+          idCell.innerText = event.id;
+
+          row.appendChild(idCell);
+
+          const dateCell = document.createElement("td");
+          dateCell.innerText = new Date(
+            event.start.dateTime || event.start.date,
+          ).toLocaleDateString();
+          row.appendChild(dateCell);
+          const eventCell = document.createElement("td");
+          eventCell.innerText = event.summary;
+
+          row.appendChild(eventCell);
+          const startTimeCell = document.createElement("td");
+          startTimeCell.innerText = event.start.dateTime
+            ? new Date(event.start.dateTime).toLocaleTimeString()
+            : "All day";
+          row.appendChild(startTimeCell);
+          const endTimeCell = document.createElement("td");
+          endTimeCell.innerText = event.end.dateTime
+            ? new Date(event.end.dateTime).toLocaleTimeString()
+            : "All day";
+          row.appendChild(endTimeCell);
+          table.appendChild(row);
+        });
+      }
+    </script>
+
+    <script
+      async
+      defer
+      src="https://apis.google.com/js/api.js"
+      onload="gapiLoaded()"
+    ></script>
+    <script
+      async
+      defer
+      src="https://accounts.google.com/gsi/client"
+      onload="gisLoaded()"
+    ></script>
+
+    <!--*********************** Question 2.1 end*********------------>
+
+    <!--------------------------- Question 2 -------------------------->
+  </body>
+</html>
